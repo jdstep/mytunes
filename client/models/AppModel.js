@@ -24,12 +24,12 @@ var AppModel = Backbone.Model.extend({
 
     // In the LibraryView, when a song is clicked, the song broadcasted "enqueue" event:
     params.library.on('enqueue', function(song){
-      // retrieve the songQueue collection and add the song broadcasted "enqueue" into it.  Triggers 'add' event to SongQueue listener
+      // retrieve the songQueue collection and add the song broadcasted "enqueue" into it.  Triggers 'remove' event to SongQueue listener
       this.get('songQueue').add(song);
     }, this);
 
     // In the SongQueueView, when a song is click, the song broadcasted "dequeue" event:
-    params.library.on('dequeue', function(song){
+    this.get('songQueue').on('dequeue', function(song){
       // retrieve the songQueue collection and remove the song that broadcasted "dequeue" event.  Triggers 'remove' event to SongQueue listener
       this.get('songQueue').remove(song);
     }, this);
