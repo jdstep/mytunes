@@ -6,20 +6,23 @@ var SongQueueView = Backbone.View.extend({
     // When a song model is added to or remove from SongQueue collection, call re render:
     this.collection.on("add", this.render, this);
     this.collection.on("remove", this.render, this);
+    this.render();
+    if (this.collection.length > 0 ) {
+      this.collection.playFirst();
+    }
   },
 
 
 
   render: function() {
     // rendering the Queue View and executing based on SongQueueEntryView of each item in songQueue Collection.
+
     this.$el.children().detach();
     this.$el.html('<th>Song QQQ</th>').append(
       this.collection.map(function(song){
         return new SongQueueEntryView({model: song}).render();
       })
     );
-
-
   },
 
 
