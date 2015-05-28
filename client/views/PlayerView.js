@@ -23,12 +23,12 @@ var PlayerView = Backbone.View.extend({
   // listens to the 'ended' event broadcasted by the HTML 5 player when a song finishes
   events: {
     // and we execute handleEnded when the 'ended' is broadcasted
-    'ended': 'handleEnded'
+    'ended': 'handleEnded',
   },
 
   // when we receive the 'ended' broadcast, call the 'ended()' method on the Song Model
   handleEnded: function(){
     this.model.ended();
-  }
+  },
 
 });

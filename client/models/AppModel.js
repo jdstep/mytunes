@@ -22,12 +22,6 @@ var AppModel = Backbone.Model.extend({
     end up refering to the window. That's just what happens with all JS events. The handlers end up
     getting called from the window (unless we override it, as we do here). */
 
-    // When a SongModel broadcast "play" event:
-    // params.library.on('play', function(song){
-    //   // change currentSong to SongModel that was broadcasted from the 'play' event
-    //   this.set('currentSong', song);
-    // }, this);
-
     this.get('songQueue').on('play', function(song){
       // change currentSong to SongModel that was broadcasted from the 'play' event
       this.set('currentSong', song);
@@ -39,19 +33,19 @@ var AppModel = Backbone.Model.extend({
       // retrieve the songQueue collection and add the song broadcasted "enqueue" into it.  Triggers 'remove' event to SongQueue listener
       this.get('songQueue').add(JSON.parse(JSON.stringify(song)));
       localStorage.setItem('queueLocal', JSON.stringify(this.get('songQueue')) );
+      // debugger;
 
-      // var test = JSON.parse(localStorage.getItem('queueLocal'));
-      // debugger
     }, this);
 
     // In the SongQueueView, when a song is click, the song broadcasted "dequeue" event:
     this.get('songQueue').on('dequeue', function(song){
-      // retrieve the songQueue collection and remove the song that broadcasted "dequeue" event.  Triggers 'remove' event to SongQueue listener
-      this.get('songQueue').remove(song);
+      // On event 'dequeue' from songModel, set localStorage to new Songqueue.  Dequeuing action is taken in SongQueue.js
       localStorage.setItem('queueLocal', JSON.stringify(this.get('songQueue')) );
     }, this);
 
-
+    this.get('songQueue').on('stopPlay', function(song){
+      this.set('currentSong', '');
+    }, this);
 
   }
 
