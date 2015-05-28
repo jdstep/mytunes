@@ -2,6 +2,8 @@
 var AppModel = Backbone.Model.extend({
 
   initialize: function(params){
+
+    // Setups up currentSong with empty SongModel and songQueue with empty SongQueue collection.
     this.set('currentSong', new SongModel());
     this.set('songQueue', new SongQueue());
 
@@ -14,27 +16,22 @@ var AppModel = Backbone.Model.extend({
     end up refering to the window. That's just what happens with all JS events. The handlers end up
     getting called from the window (unless we override it, as we do here). */
 
-
+    // When a SongModel broadcast "play" event:
     params.library.on('play', function(song){
+      // change currentSong to SongModel that was broadcasted from the 'play' event
       this.set('currentSong', song);
     }, this);
 
+    // In the LibraryView, when a song is clicked, the song broadcasted "enqueue" event:
     params.library.on('enqueue', function(song){
-
+      // retrieve the songQueue collection and add the song broadcasted "enqueue" into it.  Triggers 'add' event to SongQueue listener
       this.get('songQueue').add(song);
-
     }, this);
 
-    params.library.on('playNextSong', function() {
-      debugger;
-      this.set('currentSong', this.get("songQueue").at(0));
-      this.get("songQueue").at(0).play();
-    }, this);
-
+    // In the SongQueueView, when a song is click, the song broadcasted "dequeue" event:
     params.library.on('dequeue', function(song){
-
+      // retrieve the songQueue collection and remove the song that broadcasted "dequeue" event.  Triggers 'remove' event to SongQueue listener
       this.get('songQueue').remove(song);
-
     }, this);
 
 

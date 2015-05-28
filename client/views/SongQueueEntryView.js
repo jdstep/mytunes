@@ -5,7 +5,7 @@ var SongQueueEntryView = Backbone.View.extend({
   tagName: 'tr',
 
   template: _.template('<td>(<%= artist %>)</td><td><%= title %></td>'),
-
+  // When you click on a song in the Song Queue View window, trigger 'click' to 'handleDequeue'
   events: {
     'click': 'handleDequeue'
   },
@@ -14,6 +14,7 @@ var SongQueueEntryView = Backbone.View.extend({
     return this.$el.html(this.template(this.model.attributes));
   },
 
+  // When received the 'click' trigger, invoke the song Model's dequeue method
   handleDequeue: function(){
     this.model.dequeue();
   }
