@@ -7,30 +7,48 @@
     <script src="bower_components/underscore/underscore.js"></script>
     <script src="bower_components/backbone/backbone.js"></script>
 
+    <!-- song Data url -->
     <script src="data/data.js"></script>
 
+    <!-- song Model and Collection -->
     <script src="models/SongModel.js"></script>
     <script src="collections/Songs.js"></script>
+
+    <!-- Collection for songqueue -->
     <script src="collections/SongQueue.js"></script>
+
+    <!-- Model for app; set Current Song and Current Song Queue -->
     <script src="models/AppModel.js"></script>
 
     <script src="views/PlayerView.js"></script>
+
+    <!-- Library Wrapper View.  Calls LibraryEntryView -->
     <script src="views/LibraryView.js"></script>
+
+    <!-- ? Render and append individual Library View. Listen to on'click' -->
     <script src="views/LibraryEntryView.js"></script>
+
+    <!-- App Wrapper View. Calls and Render PlayerView & LibraryView -->
     <script src="views/AppView.js"></script>
 
+    <script src="views/SongQueueView.js"></script>
+
+    <script src="views/SongQueueEntryView.js"></script>
+
     <script>
-      $(function(){
+      // $(function(){
         // set up model objects
         var library = new Songs(songData);
-        var app = new AppModel({library: library});
+        var songQueue = new SongQueue();
+
+        var app = new AppModel({library: library, songQueue: songQueue});
 
         // build a view for the top level of the whole app
         var appView = new AppView({model: app});
-
+        // var songQueueView = new SongQueueView ({collection: songQueue});
         // put the view onto the screen
         $('body').append(appView.render());
-      });
+      // });
     </script>
   </body>
 </html>
